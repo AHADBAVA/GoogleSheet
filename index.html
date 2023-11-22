@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Job Attendance Sheet</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="p-8">
+    <h1 class="text-3xl font-bold mb-4">Job Attendance Sheet</h1>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border border-gray-400">
+            <thead>
+                <tr>
+                    <th class="border border-gray-400 px-4 py-2">Date</th>
+                    <th class="border border-gray-400 px-4 py-2">Client</th>
+                    <th class="border border-gray-400 px-4 py-2">Employee</th>
+                    <th class="border border-gray-400 px-4 py-2">Work Detail</th>
+                    <th class="border border-gray-400 px-4 py-2">Work Status</th>
+                    <th class="border border-gray-400 px-4 py-2">Comments</th>
+                    <th class="border border-gray-400 px-4 py-2">Used Techniques</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Table content will be added here dynamically using JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4" onclick="addNewRow()">Add New Task</button>
+
+    <script>
+        let jobAttendance = [
+            
+        ];
+
+        function populateTable() {
+            const tableBody = document.getElementById('table-body');
+            let tableContent = '';
+
+            jobAttendance.forEach((entry, index) => {
+                tableContent += `
+                    <tr>
+                        <td class="border border-gray-400 px-4 py-2" contenteditable="true" onBlur="updateCell(${index}, 'date', this)">${entry.date}</td>
+                        <td class="border border-gray-400 px-4 py-2" contenteditable="true" onBlur="updateCell(${index}, 'client', this)">${entry.client}</td>
+                        <td class="border border-gray-400 px-4 py-2" contenteditable="true" onBlur="updateCell(${index}, 'employee', this)">${entry.employee}</td>
+                        <td class="border border-gray-400 px-4 py-2" contenteditable="true" onBlur="updateCell(${index}, 'workDetail', this)">${entry.workDetail}</td>
+                        <td class="border border-gray-400 px-4 py-2" contenteditable="true" onBlur="updateCell(${index}, 'workStatus', this)">${entry.workStatus}</td>
+                        <td class="border border-gray-400 px-4 py-2" contenteditable="true" onBlur="updateCell(${index}, 'comments', this)">${entry.comments}</td>
+                        <td class="border border-gray-400 px-4 py-2" contenteditable="true" onBlur="updateCell(${index}, 'usedTechniques', this)">${entry.usedTechniques}</td>
+                    </tr>
+                `;
+            });
+
+            tableBody.innerHTML = tableContent;
+        }
+
+        function updateCell(rowIndex, key, element) {
+            jobAttendance[rowIndex][key] = element.innerText;
+            console.log('Updated Data:', jobAttendance);
+        }
+
+        function addNewRow() {
+            const newEntry = { date: '', client: '', employee: '', workDetail: '', workStatus: '', comments: '', usedTechniques: '' };
+            jobAttendance.push(newEntry);
+            populateTable(); // Refresh the table with the updated data
+        }
+
+        window.onload = populateTable;
+    </script>
+</body>
+
+</html>
